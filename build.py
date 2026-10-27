@@ -20,15 +20,42 @@ E = html.escape
 ASSET_VERSIONS = {name: hashlib.sha256(open(os.path.join(ROOT, "assets", name), "rb").read()).hexdigest()[:12] for name in ("style.css", "main.js")}
 
 
+STATUS_LABEL = {'before': '受付前', 'open': '受付中', 'full': '満席', 'closed': '受付終了', 'finished': '開催終了'}
+OUTLINE_ROWS = [('time', '時間'), ('venue', '会場・アクセス'), ('price', '受講料'), ('capacity', '定員'), ('items', '持ち物・服装'),
+                ('deadline', '申込期限'), ('payment', '支払い方法'), ('cancel', 'キャンセル条件')]
+PENDING_TXT = '受付開始時にご案内します'
+
+
 def status(s):
-    r = RELEASE_OF[s['slug']]
-    return f"受付前（{r['month']}受付開始予定）"
+    st = s.get('status', 'before')
+    if st == 'before':
+        return f"受付前（{RELEASE_OF[s['slug']]['month']}受付開始予定）"
+    return STATUS_LABEL[st]
+
+
+def can_apply(s):
+    # 受付中かつ正式な申込URLがある場合のみ「申し込む」を出す。受付開始月から自動で受付中にはしない。
+    return s.get('status') == 'open' and bool(s.get('apply_url'))
 
 
 def line_button(base, label='公式LINEで受付案内を受け取る', cls='btn solid'):
     if SITE['line_url']:
         return f'<a class="{cls}" href="{E(SITE["line_url"])}" rel="noopener">{label}</a>'
     return f'<span class="btn disabled" aria-disabled="true">{label}<small style="font-size:.75em">（準備中）</small></span>'
+
+
+def cta(s, base, cls='btn solid'):
+    if can_apply(s):
+        return f'<a class="{cls}" href="{E(s["apply_url"])}" rel="noopener">{E(s["name"])}に申し込む</a>'
+    st = s.get('status', 'before')
+    label = {'full': '公式LINEで次回の案内を受け取る', 'closed': '公式LINEで次回の案内を受け取る',
+             'finished': '公式LINEで次回の案内を受け取る'}.get(st, '公式LINEで受付案内を受け取る')
+    return line_button(base, label, cls)
+
+
+def ov(s, key):
+    v = (s.get('outline') or {}).get(key, '')
+    return E(v) if v else PENDING_TXT
 
 
 def head(title, desc, base):
@@ -73,21 +100,22 @@ def foot(base, sticky):
 
 def card(s, base):
     url = f'{base}seminars/{s["slug"]}/'
-    return f'''<article class="card fade">
-  <img src="{base}{s['image']}" alt="{E(s['image_alt'])}" loading="lazy" width="800" height="500">
+    topics = '|'.join(s.get('topics') or [])
+    tags = ''.join(f'<span class="tag-topic">{E(t)}</span>' for t in s.get('topics') or [])
+    return f'''<article class="card fade" data-month="{s['month']}" data-topics="{E(topics)}">
+  <img src="{base}{s['image']}" alt="{E(s['image_alt'])}（過去のセミナーの様子）" loading="lazy" width="800" height="500">
   <div class="card-body">
-    <div class="lv">{E(s['level'])}</div>
+    <div class="lv">{s['month']}月｜{E(s['level'])}</div>
     <h3>{E(s['name'])}</h3>
     <a class="btn" href="{url}" aria-label="{E(s['name'])}のセミナー詳細を見る">セミナー詳細を見る</a>
     <p>{E(s['summary'])}</p>
     <dl>
-      <dt>日程</dt><dd>{E(s['date'])}</dd>
-      <dt>会場</dt><dd>{E(s['place'])}</dd>
+      <dt>日程</dt><dd>{E(s['date'])}（{E(s['place'])}）</dd>
       <dt>形式</dt><dd>{E(s['format'])}</dd>
-      <dt>対象</dt><dd>{E(s['target'])}</dd>
       <dt>受講条件</dt><dd>{E(s['condition'])}</dd>
       <dt>受付</dt><dd>{E(status(s))}</dd>
     </dl>
+    <div class="tags">{tags}</div>
   </div>
 </article>'''
 
@@ -105,6 +133,8 @@ def build_index():
 </div>
 '''
     cards = '\n'.join(card(s, base) for s in SEMS)
+    month_opts = ''.join(f'<option value="{s["month"]}">{s["month"]}月：{E(s["name"])}</option>' for s in SEMS)
+    topic_btns = ''.join(f'<button type="button" class="topic" aria-pressed="false" data-topic="{E(t)}">{E(t)}</button>' for t in SITE['topics'])
     rel = ''
     for r in SITE['release']:
         items = ''.join(f'<li><a href="seminars/{x}/">{E(BY[x]["name"])}</a></li>' for x in r['slugs'])
@@ -198,11 +228,23 @@ def build_index():
   <div class="wrap">
     <p class="eyebrow">SEMINARS</p>
     <h2>セミナー一覧</h2>
-    <p class="lead">各講座の内容・対象・受講条件は、詳細ページでご確認いただけます。</p>
+    <div class="common-info">
+      <p><strong>対象：</strong>トレーナー・セラピストなど、身体に関わる専門職の方（受講条件のある講座は各カードに記載）</p>
+      <p><strong>料金・時間・会場・定員：</strong>各講座の受付開始時にご案内します。講座の内容とカリキュラムは「セミナー詳細を見る」からご確認ください。</p>
+    </div>
+    <form class="filter" aria-label="セミナーの絞り込み" hidden>
+      <div class="filter-row">
+        <label for="f-month">開催月</label>
+        <select id="f-month"><option value="">すべての月</option>{month_opts}</select>
+      </div>
+      <fieldset class="filter-row"><legend>学びたい内容</legend><div class="topic-btns">{topic_btns}</div></fieldset>
+      <div class="filter-foot"><p class="count" role="status" aria-live="polite">全{len(SEMS)}講座を表示中</p><button type="button" class="btn reset">すべて表示に戻す</button></div>
+    </form>
     <div class="cards">
 {cards}
     </div>
-    <p class="note">※料金・定員・会場・時間は、各講座の受付開始時にご案内します。</p>
+    <p class="empty" hidden>条件に合う講座はありません。「すべて表示に戻す」で全講座を表示できます。</p>
+    <p class="note">※カードの写真は過去のセミナーの様子です。</p>
   </div>
 </section>
 
@@ -225,7 +267,7 @@ def build_index():
   <div class="wrap narrow">
     <p class="eyebrow">OFFICIAL LINE</p>
     <h2>受付開始のお知らせは、公式LINEから。</h2>
-    <p class="lead">現在、2027年の講座はすべて受付前です。受付開始のご案内を公式LINEでお届けします。</p>
+    <p class="lead">{'現在、2027年の講座はすべて受付前です。' if all(x.get('status','before')=='before' for x in SEMS) else '受付中の講座は各詳細ページからお申し込みいただけます。'}受付開始のご案内を公式LINEでお届けします。</p>
     <div class="btns">{line_button(base)}</div>
   </div>
 </section>
@@ -235,107 +277,143 @@ def build_index():
     open(os.path.join(ROOT, 'index.html'), 'w', encoding='utf-8').write('\n'.join(line.rstrip() for line in out.split('\n')))
 
 
+def related_note(cur, x):
+    pairs = {('kansetsu-basic', 'kansetsu-advance'): '続けて受講（BASIC修了が条件）',
+             ('kansetsu-advance', 'kansetsu-basic'): 'ADVANCEの受講条件となる講座',
+             ('zero-recovery', 'kiwami'): 'ZERO RECOVERYの受講条件',
+             ('kiwami', 'zero-recovery'): '極の修了者が進める統合講座'}
+    return pairs.get((cur, x), '')
+
+
 def build_detail(s):
     base = '../../'
-    url_self = f'{base}seminars/{s["slug"]}/'
     pending = s.get('pending')
     li = lambda xs: ''.join(f'<li>{E(x)}</li>' for x in xs)
     title = f'{s["name"]}｜零式 2027 年間セミナー'
     desc = f'{s["name"]}（{s["date"]}・{s["place"]}）。{s["summary"]}'
     out = head(title, desc, base)
-    cta_main = line_button(base)
+    cta_main = cta(s, base)
+
+    def wait(what):
+        return f'<div class="pending-box"><strong>情報待ち：</strong>{what}は確認中です。確定次第このページでご案内します。</div>'
+
+    st = s.get('status', 'before')
     out += f'''<main id="main">
 <div class="wrap crumb"><a href="{base}">トップ</a> ／ <a href="{base}#seminars">セミナー一覧</a> ／ {E(s['name'])}</div>
 <div class="wrap d-hero">
-  <div>
-    <p class="eyebrow">{E(s['level'])}｜{s['month']}月開催</p>
+  <figure class="d-photo"><img src="{base}{s['image']}" alt="{E(s['image_alt'])}" width="800" height="600"><figcaption>過去のセミナーの様子</figcaption></figure>
+  <div class="d-head">
+    <p class="eyebrow">{s['month']}月開催｜{E(s['level'])}</p>
     <h1>{E(s['name'])}</h1>
     <p class="catch">{E(s['catch'])}</p>
     <p>{E(s['summary'])}</p>
     <dl class="facts">
       <dt>日程</dt><dd>{E(s['date'])}</dd>
-      <dt>会場</dt><dd>{E(s['place'])}{'（詳細は受付開始時にご案内）' if not pending else ''}</dd>
+      <dt>会場</dt><dd>{E(s['place'])}</dd>
       <dt>形式</dt><dd>{E(s['format'])}</dd>
-      <dt>対象</dt><dd>{E(s['target'])}</dd>
       <dt>受講条件</dt><dd>{E(s['condition'])}</dd>
-      <dt>受付状況</dt><dd>{E(status(s))}</dd>
+      <dt>受付状況</dt><dd><span class="st st-{st}">{E(status(s))}</span></dd>
     </dl>
     <div class="btns">{cta_main}<a class="btn" href="{base}#schedule">年間スケジュールに戻る</a></div>
   </div>
-  <img src="{base}{s['image']}" alt="{E(s['image_alt'])}" width="800" height="600">
 </div>
 '''
-    out += '<nav class="detail-nav wrap" aria-label="この講座のページ内目次">'
-    if not pending:
-        out += '<a href="#for-you">対象者</a><a href="#learn">学ぶこと</a><a href="#curriculum">カリキュラム</a>'
-    out += '<a href="#outline">開催概要</a>'
-    if s.get('faq'):
-        out += '<a href="#faq">よくある質問</a>'
-    out += '</nav>'
+    toc = [] if pending else [('for-you', '対象者'), ('goals', '学習目標'), ('content', '講義・実技'), ('curriculum', 'カリキュラム'), ('diff', '他講座との違い')]
+    toc += [('instructor', '講師'), ('outline', '開催概要')] + ([('faq', 'よくある質問')] if s.get('faq') else [])
+    out += '<nav class="detail-nav wrap" aria-label="この講座のページ内目次">' + ''.join(f'<a href="#{i}">{t}</a>' for i, t in toc) + '</nav>\n'
+
     if pending:
-        out += f'''<section class="sec-ivory d-sec"><div class="wrap narrow">
+        out += '''<section class="sec-ivory d-sec"><div class="wrap narrow">
   <h2>講座内容は詳細準備中です</h2>
   <div class="pending-box">2027年11月13日（土）に東京で開催を予定しています。講座名・内容・対象・受講条件は決まり次第、公式LINEとこのページでお知らせします。</div>
 </div></section>
 '''
     else:
+        cur = s.get('curriculum')
+        if cur:
+            if cur.get('days'):
+                body = ''.join(f'<div class="day"><h3>{E(d["title"])}</h3><ol>{li(d["items"])}</ol></div>' for d in cur['days'])
+            else:
+                body = f'<ol class="flow-list">{li(cur["steps"])}</ol>'
+            notes = ''
+            if cur.get('reference'):
+                notes += '<p class="ref-note">過去の講座内容をもとにした参考カリキュラムです。2027年の実施内容は確定後に更新します。時間配分は受付開始時にご案内します。</p>'
+            for k in ('source_note', 'extra'):
+                if cur.get(k):
+                    notes += f'<p class="ref-note">{E(cur[k])}</p>'
+            cur_html = notes + body
+        else:
+            cur_html = wait('カリキュラム（講義と実技の順序）')
+
+        if s.get('lecture') or s.get('practice'):
+            content_html = (f'<div class="two-col"><div><h3>講義で扱う内容</h3><ul class="dots">{li(s.get("lecture", []))}</ul></div>'
+                            f'<div><h3>実技で扱う内容</h3><ul class="dots">{li(s.get("practice", []))}</ul></div></div>')
+            if cur and cur.get('reference'):
+                content_html += '<p class="ref-note">過去の講座資料にもとづく内容です。2027年の内容は確定後に更新します。</p>'
+        else:
+            content_html = wait('講義と実技の具体的な内容')
+        goals_html = f'<ul class="checks">{li(s["goals"])}</ul>' if s.get('goals') else wait('学習目標')
+        history = ''
+        if s['past']:
+            history = ('<aside class="history-note"><h3>これまでの開催・関連する開催予定</h3><p>' + E(s['past']) +
+                       '</p><small>上記は2027年の募集内容とは異なります。今回の条件は開催概要をご確認ください。</small></aside>')
         out += f'''<section id="for-you" class="sec-ivory d-sec"><div class="wrap narrow fade">
   <p class="eyebrow">FOR YOU</p>
   <h2>こんな方におすすめ</h2>
   <ul class="checks">{li(s['for_whom'])}</ul>
-  <p style="margin-top:20px"><strong>対象：</strong>{E(s['target'])}<br><strong>受講条件：</strong>{E(s['condition'])}</p>
+  <p class="cond-box"><strong>対象：</strong>{E(s['target'])}<br><strong>受講条件：</strong>{E(s['condition'])}</p>
 </div></section>
 
-<section id="learn" class="d-sec"><div class="wrap narrow fade">
-  <p class="eyebrow">WHAT YOU LEARN</p>
-  <h2>このセミナーで学ぶこと</h2>
-  <ul class="checks">{li(s['learn'])}</ul>
-  <h3 style="margin:32px 0 10px">ほかの講座との違い</h3>
-  <p>{E(s['diff'])}</p>
+<section id="goals" class="d-sec"><div class="wrap narrow fade">
+  <p class="eyebrow">GOALS</p>
+  <h2>学習目標</h2>
+  {goals_html}
+  <p class="note">※学習目標は講座で扱う範囲を示すものです。技術の習得や施術の効果を保証するものではありません。</p>
+</div></section>
+
+<section id="content" class="d-sec" style="padding-top:0"><div class="wrap fade">
+  <p class="eyebrow">LECTURE &amp; PRACTICE</p>
+  <h2>講義と実技で扱う内容</h2>
+  {content_html}
 </div></section>
 
 <section id="curriculum" class="sec-charcoal d-sec"><div class="wrap narrow fade">
   <p class="eyebrow">CURRICULUM</p>
   <h2>カリキュラム</h2>
-  <div class="pending-box">講義と実技の順序・{'日別の内容・' if '2日' in s['format'] or '3日' in s['format'] else ''}時間割は、受付開始時にこのページでご案内します。</div>
+  {cur_html}
 </div></section>
 
-<section class="d-sec"><div class="wrap fade">
-  <p class="eyebrow">ATMOSPHERE</p>
-  <h2>講習の雰囲気</h2>
-  <p class="lead">講師の実演を間近で見ながら、考え方と手技を学びます。</p>
-  {('<aside class="history-note"><h3>これまでの開催・関連する開催予定</h3><p>' + E(s['past']) + '</p><small>上記は2027年の募集内容とは異なります。今回の条件は開催概要をご確認ください。</small></aside>') if s['past'] else ''}
-  <div class="mood">
-    <img src="{base}images/practice-leg.jpg" alt="ベッド上の受講者の足で実演する原口慶篤と、見学する受講者たち" loading="lazy" width="800" height="800">
-    <img src="{base}images/practice-arm.jpg" alt="受講者の前腕に触れながら説明する原口慶篤" loading="lazy" width="800" height="800">
-    <img src="{base}images/lecture-skeleton.jpg" alt="骨格模型で説明する原口慶篤" loading="lazy" width="800" height="800">
-  </div>
-  <p class="note">※写真は過去の零式セミナーの様子です。</p>
+<section id="diff" class="d-sec"><div class="wrap narrow fade">
+  <p class="eyebrow">DIFFERENCE</p>
+  <h2>ほかの零式講座との違い</h2>
+  <p>{E(s['diff'])}</p>
+  {history}
 </div></section>
 '''
-    out += f'''<section class="sec-ivory d-sec"><div class="wrap narrow intro fade">
+    certs = '、'.join(c.split('（')[0] for c in INS['certs_private'])
+    out += f'''<section id="instructor" class="sec-ivory d-sec"><div class="wrap narrow intro fade">
   <img src="{base}{INS['photo']}" alt="{E(INS['photo_alt'])}" width="440" height="587" loading="lazy">
   <div>
     <p class="eyebrow">INSTRUCTOR</p>
     <p class="name">{E(INS['name'])}</p>
     <p class="role">{E(' ／ '.join(INS['titles']))}<br>{E(INS['job'])}</p>
-    <p>民間資格：{E('、'.join(c.split('（')[0] for c in INS['certs_private']))}。人体解剖実習（5回）、オステオパシー（スラスト BASIC・ADVANCE、内臓調整）を受講。目の前の一人をよく見て、必要なことを、必要な分だけ行う姿勢を、技術と一緒に伝えています。</p>
+    <p>民間資格：{E(certs)}。人体解剖実習（5回）、オステオパシー（スラスト BASIC・ADVANCE、内臓調整）を受講。目の前の一人をよく見て、必要なことを、必要な分だけ行う姿勢を、技術と一緒に伝えています。</p>
     <a href="{base}#instructor">講師の詳しいプロフィール</a>
   </div>
 </div></section>
-
-<section id="outline" class="sec-ivory d-sec" style="padding-top:0"><div class="wrap narrow">
+'''
+    rows = ''.join(f'<tr><th scope="row">{lbl}</th><td>{ov(s, k)}</td></tr>' for k, lbl in OUTLINE_ROWS)
+    out += f'''<section id="outline" class="sec-ivory d-sec" style="padding-top:0"><div class="wrap narrow">
   <p class="eyebrow">OUTLINE</p>
   <h2>開催概要</h2>
   <table class="outline">
     <tr><th scope="row">日程</th><td>{E(s['date'])}</td></tr>
-    <tr><th scope="row">会場・アクセス</th><td>{E(s['place'])}（詳細は受付開始時にご案内します）</td></tr>
+    <tr><th scope="row">開催地</th><td>{E(s['place'])}</td></tr>
     <tr><th scope="row">形式</th><td>{E(s['format'])}</td></tr>
     <tr><th scope="row">受講条件</th><td>{E(s['condition'])}</td></tr>
-    <tr><th scope="row">キャンセル条件</th><td>お申し込み前に規約でご案内します</td></tr>
+    {rows}
     <tr><th scope="row">受付状況</th><td>{E(status(s))}</td></tr>
   </table>
-  <div class="pending-box release-note"><h3>{E(RELEASE_OF[s['slug']]['month'])}の受付開始時にご案内する内容</h3><p>受講料・定員・開始と終了の時刻・持ち物・申込期限・支払い方法は、受付開始時にこのページでご案内します。</p></div>
 </div></section>
 '''
     if s.get('faq'):
@@ -346,29 +424,23 @@ def build_detail(s):
   {fq}
 </div></section>
 '''
-    idx = SEMS.index(s)
-    rel = [x for x in (SEMS[idx - 1] if idx > 0 else None, SEMS[idx + 1] if idx + 1 < len(SEMS) else None) if x]
-    if s['slug'] == 'kansetsu-basic':
-        rel = [BY['kansetsu-advance']] + rel
-    if s['slug'] == 'kansetsu-advance':
-        rel = [BY['kansetsu-basic']] + rel
-    if s['slug'] == 'zero-recovery':
-        rel = [BY['kiwami']] + rel
-    seen, rel_u = set(), []
+    rel = [BY[x] for x in s.get('related', []) if x in BY and x != s['slug']][:3]
+    rl = ''
     for x in rel:
-        if x['slug'] not in seen and x['slug'] != s['slug']:
-            seen.add(x['slug']); rel_u.append(x)
-    rl = ''.join(f'<a href="{base}seminars/{x["slug"]}/"><small>{E(x["date"])}</small>{E(x["name"])}</a>' for x in rel_u[:3])
+        note = related_note(s['slug'], x['slug'])
+        rl += f'<a href="{base}seminars/{x["slug"]}/"><small>{E(x["date"])}{("｜" + note) if note else ""}</small>{E(x["name"])}</a>'
+    tail = '' if can_apply(s) else '。受付開始のご案内を公式LINEでお届けします。'
     out += f'''<section class="sec-charcoal line-cta"><div class="wrap narrow">
   <h2>{E(s['name'])}</h2>
-  <p class="lead">対象：{E(s['target'])}／受講条件：{E(s['condition'])}<br>この講座は{E(status(s))}です。受付開始のご案内を公式LINEでお届けします。</p>
+  <p class="lead">対象：{E(s['target'])}／受講条件：{E(s['condition'])}<br>現在の受付状況：{E(status(s))}{tail}</p>
   <div class="btns">{cta_main}<a class="btn" href="{base}#schedule">年間スケジュールに戻る</a></div>
 </div>
 <div class="wrap" style="margin-top:48px"><h3>関連する講座</h3><div class="related">{rl}</div></div>
 </section>
 </main>
 '''
-    out += foot(base, f'<a class="btn" href="{base}#schedule">年間日程</a>{line_button(base, "LINE受付案内")}')
+    sticky_right = cta(s, base) if can_apply(s) else line_button(base, 'LINE受付案内')
+    out += foot(base, f'<a class="btn" href="{base}#schedule">年間日程</a>{sticky_right}')
     d = os.path.join(ROOT, 'seminars', s['slug'])
     os.makedirs(d, exist_ok=True)
     open(os.path.join(d, 'index.html'), 'w', encoding='utf-8').write('\n'.join(line.rstrip() for line in out.split('\n')))

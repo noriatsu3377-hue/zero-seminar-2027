@@ -39,4 +39,41 @@
       }
     });
   }
+
+  // セミナー一覧の絞り込み（JavaScript無効時はフォームを出さず全件表示）
+  var form = document.querySelector('.filter');
+  if (form) {
+    var cards = Array.prototype.slice.call(document.querySelectorAll('#seminars .card'));
+    var month = form.querySelector('#f-month');
+    var topics = Array.prototype.slice.call(form.querySelectorAll('.topic'));
+    var count = form.querySelector('.count');
+    var empty = document.querySelector('#seminars .empty');
+    var apply = function () {
+      var m = month.value;
+      var on = topics.filter(function (b) { return b.getAttribute('aria-pressed') === 'true'; }).map(function (b) { return b.dataset.topic; });
+      var shown = 0;
+      cards.forEach(function (c) {
+        var ts = (c.dataset.topics || '').split('|');
+        var ok = (!m || c.dataset.month === m) && (!on.length || on.some(function (t) { return ts.indexOf(t) !== -1; }));
+        c.hidden = !ok;
+        if (ok) { shown++; c.classList.add('on'); }
+      });
+      count.textContent = (m || on.length) ? shown + '件 / 全' + cards.length + '講座を表示中' : '全' + cards.length + '講座を表示中';
+      empty.hidden = shown !== 0;
+    };
+    month.addEventListener('change', apply);
+    topics.forEach(function (b) {
+      b.addEventListener('click', function () {
+        b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+        apply();
+      });
+    });
+    form.querySelector('.reset').addEventListener('click', function () {
+      month.value = '';
+      topics.forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
+      apply();
+    });
+    form.addEventListener('submit', function (e) { e.preventDefault(); });
+    form.hidden = false;
+  }
 })();
