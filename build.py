@@ -333,11 +333,20 @@ def build_detail(s):
         if cur:
             if cur.get('days'):
                 body = ''.join(f'<div class="day"><h3>{E(d["title"])}</h3><ol>{li(d["items"])}</ol></div>' for d in cur['days'])
+            elif cur.get('chapters'):
+                body = '<div class="acc">' + ''.join(f'<details><summary>{E(c["title"])}</summary><ul class="dots">{li(c["items"])}</ul></details>' for c in cur['chapters']) + '</div>'
+            elif cur.get('blocks'):
+                body = '<div class="acc blocks">' + ''.join(
+                    f'<details><summary>{E(b["title"])}<span>{E(b["summary"])}</span></summary>'
+                    + ''.join(f'<h4>{E(c["title"])}</h4><ul class="dots">{li(c["items"])}</ul>' for c in b['chapters'])
+                    + '</details>' for b in cur['blocks']) + '</div>'
             else:
                 body = f'<ol class="flow-list">{li(cur["steps"])}</ol>'
             notes = ''
             if cur.get('reference'):
                 notes += '<p class="ref-note">過去の講座内容をもとにした参考カリキュラムです。2027年の実施内容は確定後に更新します。時間配分は受付開始時にご案内します。</p>'
+            if cur.get('plan'):
+                notes += '<p class="ref-note">2027年に向けて設計中のカリキュラム案です。時間配分・実技の詳細・各項目を扱う深さは、受付開始時にご案内します。</p>'
             for k in ('source_note', 'extra'):
                 if cur.get(k):
                     notes += f'<p class="ref-note">{E(cur[k])}</p>'
@@ -350,6 +359,8 @@ def build_detail(s):
                             f'<div><h3>実技で扱う内容</h3><ul class="dots">{li(s.get("practice", []))}</ul></div></div>')
             if cur and cur.get('reference'):
                 content_html += '<p class="ref-note">過去の講座資料にもとづく内容です。2027年の内容は確定後に更新します。</p>'
+            if cur and cur.get('plan'):
+                content_html += '<p class="ref-note">2027年カリキュラム案にもとづく内容です。過去に開催した講座の内容ではありません。</p>'
         else:
             content_html = wait('講義と実技の具体的な内容')
         goals_html = f'<ul class="checks">{li(s["goals"])}</ul>' if s.get('goals') else wait('学習目標')
