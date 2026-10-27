@@ -53,6 +53,7 @@ def head(title, desc, base):
   <nav class="nav" aria-label="サイト内">
     <a href="{base}#schedule">年間スケジュール</a><a href="{base}#instructor">講師</a><a href="{base}#seminars">セミナー一覧</a><a href="{base}#entry">受付・申込</a>
   </nav>
+  <details class="mobile-menu"><summary>メニュー</summary><nav aria-label="スマートフォンのサイト内メニュー"><a href="{base}#schedule">年間スケジュール</a><a href="{base}#instructor">講師プロフィール</a><a href="{base}#seminars">セミナー一覧</a><a href="{base}#entry">受付・申込</a></nav></details>
 </div></header>
 '''
 
@@ -122,11 +123,11 @@ def build_index():
     <ul class="hero-facts">
       <li>全12講座・各講座は年1回の開催</li>
       <li>東京開催（7月のみ高知で合宿）</li>
-      <li>土日開催</li>
+      <li>土日中心（7月の合宿は月・祝を含む）</li>
     </ul>
     <div class="btns">
       <a class="btn solid" href="#schedule">年間スケジュールを見る</a>
-      <a class="btn" href="#seminars">セミナー一覧を見る</a>
+      {line_button(base, "公式LINEで受付案内を受け取る", "btn")}
     </div>
   </div>
   <button class="motion-toggle" type="button" aria-pressed="false">背景の動きを停止</button>
@@ -149,14 +150,14 @@ def build_index():
   <div class="wrap">
     <p class="eyebrow">LEARNING PATH</p>
     <h2>零式で学べること</h2>
-    <p class="lead">零式の講座は、入門から統合までの段階に分かれています。<span class="mk">受講条件のない講座</span>から学びはじめ、条件のある講座へ順に進めます。</p>
+    <p class="lead">零式の講座は、入門から統合までの段階に分かれています。<span class="mk">興味や目的に合わせて</span>講座を選べます。すべてを順番に受講する必要はありません。必要な修了歴や参加日数は、各講座の受講条件をご確認ください。</p>
     <div class="steps">
       <div class="step fade"><div class="lv">STEP 1｜入門</div><h3>手・足をつくる</h3><p>零式-「手」を作るセミナー／零式-足を作るセミナー。受講条件なし。</p></div>
       <div class="step fade"><div class="lv">STEP 2｜基幹</div><h3>零式-ヘッドコンディショニング極</h3><p>零式の中心となる技術。受講条件なし。</p></div>
       <div class="step fade"><div class="lv">STEP 3｜応用・上位</div><h3>姿勢・経絡・関節・内臓</h3><p>美姿勢、経絡ストレッチ、関節調整法、内臓調整など。関節調整法ADVANCEはBASIC修了者が対象。</p></div>
       <div class="step fade"><div class="lv">STEP 4｜統合</div><h3>ZERO RECOVERY</h3><p>零式の技術を統合する最上位講座。零式-ヘッドコンディショニング極の修了者が対象。</p></div>
     </div>
-    <p class="cond">受講条件のある講座：零式-関節調整法 ADVANCE（BASIC修了者）／零式-ZERO RECOVERY 第2期（零式-ヘッドコンディショニング極の修了者）</p>
+    <p class="cond">事前の修了歴が必要な講座：零式-関節調整法 ADVANCE（BASIC修了者）／零式-ZERO RECOVERY 第2期（零式-ヘッドコンディショニング極の修了者）</p>
   </div>
 </section>
 
@@ -207,7 +208,7 @@ def build_index():
   <div class="wrap">
     <p class="eyebrow">ENTRY</p>
     <h2>受付開始時期と、お申し込みの流れ</h2>
-    <p class="lead">受付は年4回、開催時期ごとに開始します（2026年11月・2027年1月・4月・7月）。受付開始のお知らせは公式LINEでお届けします。</p>
+    <p class="lead">2027年の講座は4つの期間に分けて受付を開始します（2026年11月・2027年1月・4月・7月）。受付開始のお知らせは公式LINEでお届けします。</p>
     <div class="release">{rel}</div>
     <ol class="flow">
       <li>公式LINEで受付開始の案内を受け取る</li>
@@ -229,7 +230,7 @@ def build_index():
 </main>
 '''
     out += foot(base, f'<a class="btn" href="#schedule">年間日程</a>{line_button(base, "LINE受付案内")}')
-    open(os.path.join(ROOT, 'index.html'), 'w', encoding='utf-8').write(out)
+    open(os.path.join(ROOT, 'index.html'), 'w', encoding='utf-8').write('\n'.join(line.rstrip() for line in out.split('\n')))
 
 
 def build_detail(s):
@@ -262,6 +263,13 @@ def build_detail(s):
   <img src="{base}{s['image']}" alt="{E(s['image_alt'])}" width="800" height="600">
 </div>
 '''
+    out += '<nav class="detail-nav wrap" aria-label="この講座のページ内目次">'
+    if not pending:
+        out += '<a href="#for-you">対象者</a><a href="#learn">学ぶこと</a><a href="#curriculum">カリキュラム</a>'
+    out += '<a href="#outline">開催概要</a>'
+    if s.get('faq'):
+        out += '<a href="#faq">よくある質問</a>'
+    out += '</nav>'
     if pending:
         out += f'''<section class="sec-ivory d-sec"><div class="wrap narrow">
   <h2>講座内容は詳細準備中です</h2>
@@ -269,14 +277,14 @@ def build_detail(s):
 </div></section>
 '''
     else:
-        out += f'''<section class="sec-ivory d-sec"><div class="wrap narrow fade">
+        out += f'''<section id="for-you" class="sec-ivory d-sec"><div class="wrap narrow fade">
   <p class="eyebrow">FOR YOU</p>
   <h2>こんな方におすすめ</h2>
   <ul class="checks">{li(s['for_whom'])}</ul>
   <p style="margin-top:20px"><strong>対象：</strong>{E(s['target'])}<br><strong>受講条件：</strong>{E(s['condition'])}</p>
 </div></section>
 
-<section class="d-sec"><div class="wrap narrow fade">
+<section id="learn" class="d-sec"><div class="wrap narrow fade">
   <p class="eyebrow">WHAT YOU LEARN</p>
   <h2>このセミナーで学ぶこと</h2>
   <ul class="checks">{li(s['learn'])}</ul>
@@ -284,7 +292,7 @@ def build_detail(s):
   <p>{E(s['diff'])}</p>
 </div></section>
 
-<section class="sec-charcoal d-sec"><div class="wrap narrow fade">
+<section id="curriculum" class="sec-charcoal d-sec"><div class="wrap narrow fade">
   <p class="eyebrow">CURRICULUM</p>
   <h2>カリキュラム</h2>
   <div class="pending-box">講義と実技の順序・{'日別の内容・' if '2日' in s['format'] or '3日' in s['format'] else ''}時間割は、受付開始時にこのページでご案内します。</div>
@@ -293,7 +301,8 @@ def build_detail(s):
 <section class="d-sec"><div class="wrap fade">
   <p class="eyebrow">ATMOSPHERE</p>
   <h2>講習の雰囲気</h2>
-  <p class="lead">講師の実演を間近で見ながら、考え方と手技を学びます。{E(s['past'])}</p>
+  <p class="lead">講師の実演を間近で見ながら、考え方と手技を学びます。</p>
+  {('<aside class="history-note"><h3>これまでの開催・関連する開催予定</h3><p>' + E(s['past']) + '</p><small>上記は2027年の募集内容とは異なります。今回の条件は開催概要をご確認ください。</small></aside>') if s['past'] else ''}
   <div class="mood">
     <img src="{base}images/practice-leg.jpg" alt="ベッド上の受講者の足で実演する原口慶篤と、見学する受講者たち" loading="lazy" width="800" height="800">
     <img src="{base}images/practice-arm.jpg" alt="受講者の前腕に触れながら説明する原口慶篤" loading="lazy" width="800" height="800">
@@ -313,28 +322,23 @@ def build_detail(s):
   </div>
 </div></section>
 
-<section class="sec-ivory d-sec" style="padding-top:0"><div class="wrap narrow">
+<section id="outline" class="sec-ivory d-sec" style="padding-top:0"><div class="wrap narrow">
   <p class="eyebrow">OUTLINE</p>
   <h2>開催概要</h2>
   <table class="outline">
     <tr><th scope="row">日程</th><td>{E(s['date'])}</td></tr>
-    <tr><th scope="row">時間</th><td>受付開始時にご案内します</td></tr>
     <tr><th scope="row">会場・アクセス</th><td>{E(s['place'])}（詳細は受付開始時にご案内します）</td></tr>
     <tr><th scope="row">形式</th><td>{E(s['format'])}</td></tr>
-    <tr><th scope="row">受講料</th><td>受付開始時にご案内します（税込・税別の区別も併せて表示します）</td></tr>
-    <tr><th scope="row">定員</th><td>受付開始時にご案内します</td></tr>
-    <tr><th scope="row">持ち物</th><td>受付開始時にご案内します</td></tr>
     <tr><th scope="row">受講条件</th><td>{E(s['condition'])}</td></tr>
-    <tr><th scope="row">申込期限</th><td>受付開始時にご案内します</td></tr>
-    <tr><th scope="row">支払い方法</th><td>受付開始時にご案内します</td></tr>
     <tr><th scope="row">キャンセル条件</th><td>お申し込み前に規約でご案内します</td></tr>
     <tr><th scope="row">受付状況</th><td>{E(status(s))}</td></tr>
   </table>
+  <div class="pending-box release-note"><h3>{E(RELEASE_OF[s['slug']]['month'])}の受付開始時にご案内する内容</h3><p>受講料・定員・開始と終了の時刻・持ち物・申込期限・支払い方法は、受付開始時にこのページでご案内します。</p></div>
 </div></section>
 '''
     if s.get('faq'):
         fq = ''.join(f'<details><summary>{E(q)}</summary><p>{E(a)}</p></details>' for q, a in s['faq'])
-        out += f'''<section class="d-sec faq"><div class="wrap narrow">
+        out += f'''<section id="faq" class="d-sec faq"><div class="wrap narrow">
   <p class="eyebrow">FAQ</p>
   <h2>よくある質問</h2>
   {fq}
@@ -365,7 +369,7 @@ def build_detail(s):
     out += foot(base, f'<a class="btn" href="{base}#schedule">年間日程</a>{line_button(base, "LINE受付案内")}')
     d = os.path.join(ROOT, 'seminars', s['slug'])
     os.makedirs(d, exist_ok=True)
-    open(os.path.join(d, 'index.html'), 'w', encoding='utf-8').write(out)
+    open(os.path.join(d, 'index.html'), 'w', encoding='utf-8').write('\n'.join(line.rstrip() for line in out.split('\n')))
 
 
 if __name__ == '__main__':

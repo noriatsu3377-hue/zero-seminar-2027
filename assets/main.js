@@ -13,7 +13,7 @@
       entries.forEach(function (e) {
         if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); }
       });
-    }, { threshold: 0.25 });
+    }, { threshold: 0 });
     targets.forEach(function (el) { io.observe(el); });
   }
 
@@ -24,6 +24,19 @@
       var paused = hero.classList.toggle('paused');
       btn.textContent = paused ? '背景の動きを再生' : '背景の動きを停止';
       btn.setAttribute('aria-pressed', paused ? 'true' : 'false');
+    });
+  }
+
+  var menu = document.querySelector('.mobile-menu');
+  if (menu) {
+    menu.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () { menu.open = false; });
+    });
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && menu.open) {
+        menu.open = false;
+        menu.querySelector('summary').focus();
+      }
     });
   }
 })();
