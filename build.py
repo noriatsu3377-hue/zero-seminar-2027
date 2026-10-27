@@ -110,7 +110,7 @@ def build_index():
     trains = ''.join(f'<li>{E(c)}</li>' for c in INS['trainings'])
     acts = ''.join(f'<li>{E(c)}</li>' for c in INS['activities'])
     out = head('零式 2027 年間セミナー｜東京から、零式を学ぶ一年。',
-               'トレーナー・セラピストのための零式セミナー。2027年は東京を中心に、手・足の入門講座からヘッドコンディショニング極、関節調整法、ZERO RECOVERYまで、毎月1講座を開催します。', base)
+               'トレーナー・セラピストのための零式セミナー。2027年は東京を中心に、手・足の入門講座から零式-ヘッドコンディショニング極、関節調整法、ZERO RECOVERYまで、毎月1講座を開催します。', base)
     out += f'''<main id="main">
 <section class="hero">
   <div class="hero-photo" style="background-image:url('images/hero-assessment.jpg')" role="img" aria-label="受講者の肩まわりを評価する講師・原口慶篤"></div>
@@ -151,12 +151,12 @@ def build_index():
     <h2>零式で学べること</h2>
     <p class="lead">零式の講座は、入門から統合までの段階に分かれています。<span class="mk">受講条件のない講座</span>から学びはじめ、条件のある講座へ順に進めます。</p>
     <div class="steps">
-      <div class="step fade"><div class="lv">STEP 1｜入門</div><h3>手・足をつくる</h3><p>「手」を作るセミナー／足を作るセミナー。受講条件なし。</p></div>
-      <div class="step fade"><div class="lv">STEP 2｜基幹</div><h3>ヘッドコンディショニング極</h3><p>零式の中心となる技術。受講条件なし。</p></div>
+      <div class="step fade"><div class="lv">STEP 1｜入門</div><h3>手・足をつくる</h3><p>零式-「手」を作るセミナー／零式-足を作るセミナー。受講条件なし。</p></div>
+      <div class="step fade"><div class="lv">STEP 2｜基幹</div><h3>零式-ヘッドコンディショニング極</h3><p>零式の中心となる技術。受講条件なし。</p></div>
       <div class="step fade"><div class="lv">STEP 3｜応用・上位</div><h3>姿勢・経絡・関節・内臓</h3><p>美姿勢、経絡ストレッチ、関節調整法、内臓調整など。関節調整法ADVANCEはBASIC修了者が対象。</p></div>
-      <div class="step fade"><div class="lv">STEP 4｜統合</div><h3>ZERO RECOVERY</h3><p>零式の技術を統合する最上位講座。ヘッドコンディショニング極の修了者が対象。</p></div>
+      <div class="step fade"><div class="lv">STEP 4｜統合</div><h3>ZERO RECOVERY</h3><p>零式の技術を統合する最上位講座。零式-ヘッドコンディショニング極の修了者が対象。</p></div>
     </div>
-    <p class="cond">受講条件のある講座：零式関節調整法 ADVANCE（BASIC修了者）／零式-ZERO RECOVERY 第2期（ヘッドコンディショニング極の修了者）</p>
+    <p class="cond">受講条件のある講座：零式-関節調整法 ADVANCE（BASIC修了者）／零式-ZERO RECOVERY 第2期（零式-ヘッドコンディショニング極の修了者）</p>
   </div>
 </section>
 
