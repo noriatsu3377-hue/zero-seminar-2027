@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>零式 2027 年間セミナー｜ZERO SEMINAR CALENDAR</title>
+<meta name="description" content="零式（ZERO）の2027年 年間セミナースケジュール。東京を拠点に、入門から上位講座まで一年を通して学べます。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Noto+Sans+JP:wght@300;400;500&family=Noto+Serif+JP:wght@300;400;500&display=swap">
+<style>
+/* 零式LPと同じ黒×金。年間カレンダーを主役にした縦一列構成 */
+:root{
+  --bg:#000; --surface:#0d0c0b; --line:#2a2622; --text:#f0f0f0; --muted:#8c8780;
+  --gold:#c5a880; --gold-dim:rgba(197,168,128,.35);
+  --font-en:'Cinzel',serif; --font-jp:'Noto Sans JP',sans-serif; --font-serif:'Noto Serif JP',serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font-jp);font-weight:300;line-height:1.9;letter-spacing:.04em}
+a{color:inherit}
+img{max-width:100%}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:20px}
+section{padding-block:96px}
+.eyebrow{font-family:var(--font-en);color:var(--gold);letter-spacing:.3em;font-size:.8rem;margin:0 0 12px}
+h2{font-family:var(--font-serif);font-weight:400;font-size:clamp(1.5rem,3.4vw,2.1rem);margin:0 0 20px;line-height:1.6;text-wrap:balance}
+.lead{color:var(--muted);max-width:640px;margin:0}
+.rule{width:48px;height:1px;background:var(--gold);margin:28px 0}
+
+/* HERO */
+.hero{position:relative;min-height:88vh;display:grid;place-items:center;text-align:center;overflow:hidden;padding-block:120px}
+.hero::before{content:"";position:absolute;inset:0;background:url(images/hero_bg.png) center/cover no-repeat;opacity:.35}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.2),#000 95%)}
+.hero .in{position:relative;z-index:1;padding-inline:20px}
+.hero .year{font-family:var(--font-en);font-size:clamp(4rem,14vw,9rem);line-height:1;color:transparent;-webkit-text-stroke:1px var(--gold);letter-spacing:.08em;margin:0}
+.hero .en{font-family:var(--font-en);letter-spacing:.4em;color:var(--gold);font-size:.85rem;margin:18px 0 28px}
+.hero h1{font-family:var(--font-serif);font-weight:400;font-size:clamp(1.6rem,4.6vw,2.6rem);margin:0 0 20px;line-height:1.6}
+.hero p{color:#cfcac3;margin:0 auto;max-width:560px}
+.btn{display:inline-block;margin-top:36px;padding:16px 40px;border:1px solid var(--gold);color:var(--gold);text-decoration:none;letter-spacing:.2em;font-size:.9rem;transition:.3s}
+.btn:hover,.btn:focus-visible{background:var(--gold);color:#000;outline:none}
+.btn.solid{background:var(--gold);color:#000}
+.btn.solid:hover{background:transparent;color:var(--gold)}
+
+/* PATH */
+.path{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:48px}
+.step{background:var(--bg);padding:28px 22px;min-width:0}
+.step .lv{font-family:var(--font-en);color:var(--gold);font-size:.75rem;letter-spacing:.25em}
+.step h3{font-family:var(--font-serif);font-weight:400;font-size:1.15rem;margin:8px 0 10px}
+.step p{margin:0;color:var(--muted);font-size:.88rem}
+
+/* RELEASE */
+.release{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:40px}
+.rel{border-top:1px solid var(--gold);padding-top:16px}
+.rel .when{font-family:var(--font-en);color:var(--gold);font-size:.95rem;letter-spacing:.1em}
+.rel .what{font-size:.9rem;color:#cfcac3}
+
+/* CALENDAR */
+.cal{margin-top:48px;border-top:1px solid var(--line)}
+.month{display:grid;grid-template-columns:120px 1fr;border-bottom:1px solid var(--line)}
+.month .m{font-family:var(--font-en);color:var(--gold);padding:24px 0;font-size:1.6rem;line-height:1}
+.month .m small{display:block;font-size:.7rem;letter-spacing:.25em;color:var(--muted);margin-top:8px}
+.events{padding:18px 0;display:grid;gap:12px;min-width:0}
+.ev{display:grid;grid-template-columns:150px 1fr auto;gap:16px;align-items:baseline}
+.ev .d{font-variant-numeric:tabular-nums;color:#ddd;font-size:.92rem}
+.ev .t{font-family:var(--font-serif);font-size:1.02rem}
+.ev .t span{display:block;font-family:var(--font-jp);font-size:.8rem;color:var(--muted)}
+.tag{font-size:.72rem;letter-spacing:.12em;padding:3px 10px;border:1px solid var(--gold-dim);color:var(--gold);white-space:nowrap}
+.tag.main{background:var(--gold);color:#000;border-color:var(--gold)}
+.ev.pending .t{color:var(--muted)}
+.note{color:var(--muted);font-size:.8rem;margin-top:20px}
+
+/* COURSES */
+.courses{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px}
+.card{border:1px solid var(--line);background:var(--surface);padding:28px 24px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.card .lv{font-family:var(--font-en);color:var(--gold);font-size:.72rem;letter-spacing:.25em}
+.card h3{font-family:var(--font-serif);font-weight:400;font-size:1.2rem;margin:0;line-height:1.5}
+.card p{margin:0;color:#bdb7af;font-size:.88rem}
+.card dl{margin:8px 0 0;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:.82rem}
+.card dt{color:var(--gold)}
+.card dd{margin:0;color:#ddd;font-variant-numeric:tabular-nums}
+
+/* FLOW / CTA */
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:40px;counter-reset:f}
+.flow li{list-style:none;border:1px solid var(--line);padding:22px 18px;font-size:.9rem;counter-increment:f}
+.flow li::before{content:"0" counter(f);display:block;font-family:var(--font-en);color:var(--gold);margin-bottom:8px}
+.flow{padding:0}
+.cta{text-align:center;border-top:1px solid var(--line)}
+.cta p{color:var(--muted)}
+footer{text-align:center;color:var(--muted);font-size:.75rem;padding:40px 20px;border-top:1px solid var(--line)}
+
+@media (max-width:860px){
+  .path,.release,.flow{grid-template-columns:repeat(2,1fr)}
+  .courses{grid-template-columns:1fr 1fr}
+}
+@media (max-width:600px){
+  section{padding-block:72px}
+  .path,.release,.flow,.courses{grid-template-columns:1fr}
+  .month{grid-template-columns:1fr}
+  .month .m{padding:20px 0 0}
+  .ev{grid-template-columns:1fr auto}
+  .ev .d{grid-column:1/-1}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="in">
+    <p class="year">2027</p>
+    <p class="en">ZERO SEMINAR CALENDAR</p>
+    <h1>東京から、零式を学ぶ一年。</h1>
+    <p>入門から上位講座まで。<br>2027年、零式は東京を拠点に、一年を通して学べる場をつくります。</p>
+    <a class="btn" href="#calendar">年間スケジュールを見る</a>
+  </div>
+</header>
+
+<main>
+<section>
+  <div class="wrap">
+    <p class="eyebrow">LEARNING PATH</p>
+    <h2>入口から、上位講座まで。<br>一年で、零式を一周する。</h2>
+    <p class="lead">どこから始めても大丈夫です。入門で「触れる手」をつくり、ヘッドコンディショニング極で零式の考え方を身につけ、上位講座で全身へと広げていきます。</p>
+    <div class="path">
+      <div class="step"><div class="lv">STEP 1｜入門</div><h3>手・足をつくる</h3><p>手を作るセミナー／足を作るセミナー。感覚と土台を育てる。</p></div>
+      <div class="step"><div class="lv">STEP 2｜基幹</div><h3>ヘッドコンディショニング極</h3><p>零式の中心となる技術。頭部から全身の緊張をほどく。</p></div>
+      <div class="step"><div class="lv">STEP 3｜上位</div><h3>経絡・関節調整</h3><p>経絡ストレッチ／零式関節調整法 BASIC・ADVANCE。</p></div>
+      <div class="step"><div class="lv">STEP 4｜統合</div><h3>ZERO RECOVERY</h3><p>全身疲労を評価し、60〜90分の施術を設計する。</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="calendar" style="padding-top:0">
+  <div class="wrap">
+    <p class="eyebrow">2027 SCHEDULE</p>
+    <h2>年間スケジュール</h2>
+    <p class="lead">開催は原則、東京の土日です。会場は受付開始時にご案内します。</p>
+
+    <div class="cal">
+      <div class="month"><div class="m">01<small>JANUARY</small></div><div class="events">
+        <div class="ev"><div class="d">1月16日（土）</div><div class="t">セラピストの為の「手」を作るセミナー<span>入門｜対面＋オンライン</span></div><div class="tag">入門</div></div>
+      </div></div>
+      <div class="month"><div class="m">02<small>FEBRUARY</small></div><div class="events">
+        <div class="ev"><div class="d">2月20日（土）</div><div class="t">ヘッドコンディショニング極<span>基幹｜1日</span></div><div class="tag main">基幹</div></div>
+      </div></div>
+      <div class="month"><div class="m">03<small>MARCH</small></div><div class="events">
+        <div class="ev"><div class="d">3月13日（土）</div><div class="t">足を作るセミナー<span>入門｜1日</span></div><div class="tag">入門</div></div>
+      </div></div>
+      <div class="month"><div class="m">04<small>APRIL</small></div><div class="events">
+        <div class="ev"><div class="d">4月17日（土）</div><div class="t">解剖×評価×施術でつくる美姿勢<span>姿勢｜1日</span></div><div class="tag">姿勢</div></div>
+      </div></div>
+      <div class="month"><div class="m">05<small>MAY</small></div><div class="events">
+        <div class="ev"><div class="d">5月29日（土）・30日（日）</div><div class="t">零式-経絡ストレッチ<span>上位｜2日間</span></div><div class="tag">上位</div></div>
+      </div></div>
+      <div class="month"><div class="m">06<small>JUNE</small></div><div class="events">
+        <div class="ev"><div class="d">6月19日（土）</div><div class="t">施術で作る美脚美尻セミナー<span>ボディメイク｜1日</span></div><div class="tag">美容</div></div>
+      </div></div>
+      <div class="month"><div class="m">07<small>JULY</small></div><div class="events">
+        <div class="ev"><div class="d">7月17日（土）〜19日（月・祝）</div><div class="t">ボディメイク・コンディショニング合宿<span>高知｜海の日の3連休</span></div><div class="tag">合宿</div></div>
+      </div></div>
+      <div class="month"><div class="m">08<small>AUGUST</small></div><div class="events">
+        <div class="ev"><div class="d">8月21日（土）</div><div class="t">内臓調整 ― 神経アプローチ<span>内臓・自律神経｜1日</span></div><div class="tag">神経</div></div>
+      </div></div>
+      <div class="month"><div class="m">09<small>SEPTEMBER</small></div><div class="events">
+        <div class="ev"><div class="d">9月18日（土）・19日（日）</div><div class="t">零式関節調整法 BASIC<span>上位｜2日間</span></div><div class="tag">上位</div></div>
+      </div></div>
+      <div class="month"><div class="m">10<small>OCTOBER</small></div><div class="events">
+        <div class="ev"><div class="d">10月9日（土）・10日（日）</div><div class="t">零式関節調整法 ADVANCE<span>上位｜2日間（BASIC修了者）</span></div><div class="tag">上位</div></div>
+      </div></div>
+      <div class="month"><div class="m">11<small>NOVEMBER</small></div><div class="events">
+        <div class="ev pending"><div class="d">11月13日（土）</div><div class="t">新講座<span>内容は決まり次第お知らせします</span></div><div class="tag">準備中</div></div>
+      </div></div>
+      <div class="month"><div class="m">12<small>DECEMBER</small></div><div class="events">
+        <div class="ev"><div class="d">12月11日（土）・12日（日）</div><div class="t">零式-ZERO RECOVERY 第2期<span>統合｜2日間（極の修了者）</span></div><div class="tag">統合</div></div>
+      </div></div>
+      </div></div>
+    </div>
+    <p class="note">※各講座の開催は年1回です。1ヶ月に開催するセミナーは1つまでとしています。日程は予定で、変更がある場合は公式LINEでお知らせします。</p>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <p class="eyebrow">ENTRY</p>
+    <h2>お申し込みは、3ヶ月ごとに受付を開始します。</h2>
+    <p class="lead">年間の日程は先にご確認いただき、各講座は下記のタイミングで受付を開始します。どの講座も年1回の開催です。受付開始のお知らせは、公式LINEで最初にお届けします。</p>
+    <div class="release">
+      <div class="rel"><div class="when">2026.11</div><div class="what">1〜3月の講座<br>手を作る／極／足を作る</div></div>
+      <div class="rel"><div class="when">2027.01</div><div class="what">4〜6月の講座<br>美姿勢／経絡ストレッチ／美脚美尻</div></div>
+      <div class="rel"><div class="when">2027.04</div><div class="what">7〜9月の講座<br>合宿／内臓調整／関節調整法 BASIC</div></div>
+      <div class="rel"><div class="when">2027.07</div><div class="what">10〜12月の講座<br>関節調整法 ADVANCE／新講座／ZERO RECOVERY</div></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <p class="eyebrow">COURSES</p>
+    <h2>講座のご紹介</h2>
+    <div class="courses">
+      <div class="card"><div class="lv">入門</div><h3>セラピストの為の<br>「手」を作るセミナー</h3><p>感覚を磨き、結果を変える「手」の育て方。触れる位置、圧の方向、力加減、相手の反応の受け取り方まで、施術の結果を左右する「手」そのものを育てます。どの技術を学ぶ前にも土台になる入門講座です。</p><dl><dt>開催</dt><dd>1月16日（土）</dd><dt>形式</dt><dd>対面＋オンライン</dd></dl></div>
+      <div class="card"><div class="lv">入門</div><h3>足を作るセミナー</h3><p>足部・足底・足趾の機能を、解剖と評価から理解します。立つ・歩く土台である足を整えることで、膝・股関節・姿勢へのつながりを実技で確かめます。</p><dl><dt>開催</dt><dd>3月13日（土）</dd><dt>形式</dt><dd>対面（実技あり）</dd></dl></div>
+      <div class="card"><div class="lv">基幹</div><h3>ヘッドコンディショニング<br>極</h3><p>零式の中心となる技術。頭蓋・頸部・顎まわりへのアプローチで、全身の防御的な緊張をほどきます。施術中から「目が開く」「呼吸が通る」と変化を感じやすい、零式の看板講座です。</p><dl><dt>開催</dt><dd>2月20日（土）</dd><dt>形式</dt><dd>対面（実技あり）</dd></dl></div>
+      <div class="card"><div class="lv">姿勢</div><h3>解剖×評価×施術でつくる<br>美姿勢</h3><p>トレーナーの新常識。姿勢を「見た目」ではなく解剖と評価から読み解き、施術とエクササイズで整える流れを学びます。姿勢改善を求めるお客様に、根拠を持って説明・提案できるようになります。</p><dl><dt>開催</dt><dd>4月17日（土）</dd><dt>形式</dt><dd>対面（実技あり）</dd></dl></div>
+      <div class="card"><div class="lv">上位</div><h3>零式-経絡ストレッチ</h3><p>東洋医学の経絡の流れを、ストレッチと施術に落とし込む2日間。筋肉単体ではなく、つながりで身体をとらえ、全身を連動させてゆるめる技術を習得します。</p><dl><dt>開催</dt><dd>5月29日（土）・30日（日）</dd><dt>形式</dt><dd>対面・2日間</dd></dl></div>
+      <div class="card"><div class="lv">美容</div><h3>施術で作る美脚美尻セミナー</h3><p>脚とお尻のラインを、施術で変える。骨盤・股関節・下肢の評価から、むくみや張り、使えていない筋へのアプローチまで、ボディメイクを求めるお客様に結果で応える技術を学びます。</p><dl><dt>開催</dt><dd>6月19日（土）</dd><dt>形式</dt><dd>対面（実技あり）</dd></dl></div>
+      <div class="card"><div class="lv">合宿</div><h3>ボディメイク・<br>コンディショニング合宿</h3><p>夏の高知で、学びと実践に集中する3日間。施術によるコンディショニングと、トレーニングによるボディメイクを組み合わせ、身体を「整えてから鍛える」流れを丸ごと体験します。</p><dl><dt>開催</dt><dd>7月17日（土）〜19日（月・祝）</dd><dt>形式</dt><dd>高知県・3日間</dd></dl></div>
+      <div class="card"><div class="lv">神経</div><h3>内臓調整<br>― 神経アプローチ</h3><p>内臓の働きを、自律神経とのつながりから整える。腹部の触診と、神経系へのやさしいアプローチで、呼吸・姿勢・疲れやすさの背景にある内臓の緊張をゆるめる考え方と技術を学びます。</p><dl><dt>開催</dt><dd>8月21日（土）</dd><dt>形式</dt><dd>対面（実技あり）</dd></dl></div>
+      <div class="card"><div class="lv">上位</div><h3>零式関節調整法<br>BASIC・ADVANCE</h3><p>関節の評価から調整までを、2段階で習得します。BASICで安全な評価と基本の調整を、ADVANCEで全身の関節を連動させた応用を学びます。</p><dl><dt>開催</dt><dd>BASIC 9月18日・19日<br>ADVANCE 10月9日・10日</dd><dt>形式</dt><dd>対面・各2日間</dd></dl></div>
+      <div class="card"><div class="lv">統合</div><h3>零式-ZERO RECOVERY</h3><p>全身疲労を評価し、按圧・軽擦・揺らし・ストレッチ・モビライゼーション・関節調整・ヘッドコンディショニングを統合して、60〜90分の施術を設計する2日間。零式の集大成です。</p><dl><dt>開催</dt><dd>12月11日（土）・12日（日）</dd><dt>形式</dt><dd>極の修了者対象</dd></dl></div>
+      <div class="card"><div class="lv">新講座</div><h3>新講座 準備中</h3><p>2027年は新しい講座の開講を予定しています。内容は決まり次第、公式LINEでお知らせします。</p><dl><dt>開催</dt><dd>11月13日（土）予定</dd><dt>形式</dt><dd>－</dd></dl></div>
+    </div>
+    <p class="note">※料金・定員・会場は、各講座の受付開始時にご案内します。</p>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <p class="eyebrow">FLOW</p>
+    <h2>お申し込みの流れ</h2>
+    <ol class="flow">
+      <li>公式LINEで受付開始のお知らせを受け取る</li>
+      <li>各講座の申込フォームから送信</li>
+      <li>案内メールに沿ってお支払い</li>
+      <li>入金確認後、正式申込完了</li>
+    </ol>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap">
+    <p class="eyebrow">OFFICIAL LINE</p>
+    <h2>受付開始のお知らせは、<br>公式LINEから。</h2>
+    <p>各講座は定員制です。受付開始のご案内を最初にお届けします。</p>
+    <a class="btn solid" href="#">公式LINEに登録する</a>
+  </div>
+</section>
+</main>
+
+<footer>© 2027 ZERO METHODOLOGY. All Rights Reserved.</footer>
+</body>
+</html>
