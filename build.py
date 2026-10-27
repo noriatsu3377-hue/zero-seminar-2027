@@ -9,6 +9,7 @@
 import json
 import html
 import os
+import hashlib
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 DATA = json.load(open(os.path.join(ROOT, 'data', 'seminars.json'), encoding='utf-8'))
@@ -16,6 +17,7 @@ SITE, INS, SEMS = DATA['site'], DATA['instructor'], DATA['seminars']
 BY = {s['slug']: s for s in SEMS}
 RELEASE_OF = {slug: r for r in SITE['release'] for slug in r['slugs']}
 E = html.escape
+ASSET_VERSIONS = {name: hashlib.sha256(open(os.path.join(ROOT, "assets", name), "rb").read()).hexdigest()[:12] for name in ("style.css", "main.js")}
 
 
 def status(s):
@@ -43,8 +45,8 @@ def head(title, desc, base):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Noto+Sans+JP:wght@400;500&family=Noto+Serif+JP:wght@500&display=swap">
-<link rel="stylesheet" href="{base}assets/style.css">
-<script src="{base}assets/main.js" defer></script>
+<link rel="stylesheet" href="{base}assets/style.css?v={ASSET_VERSIONS["style.css"]}">
+<script src="{base}assets/main.js?v={ASSET_VERSIONS["main.js"]}" defer></script>
 </head>
 <body class="has-sticky">
 <a class="skip" href="#main">本文へ移動</a>
