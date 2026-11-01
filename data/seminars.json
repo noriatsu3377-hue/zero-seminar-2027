@@ -90,8 +90,8 @@
       "summary": "手を「脳に情報を送るセンサー」と「身体を支える土台」の両面から捉え、評価・手を作る手順・動作での比べ方までを1日で練習する入門講座です。実技が8割です。",
       "target": "トレーナー・セラピストなど、身体に関わる専門職の方",
       "condition": "なし（どなたでも受講できます）",
-      "image": "images/practice-arm.jpg",
-      "image_alt": "受講者の腕に触れながら手技を説明する原口慶篤",
+      "image": "images/hands-main.jpg",
+      "image_alt": "受講者の手を調整する様子",
       "for_whom": [
         "触れ方を見直したいセラピスト・施術者",
         "腕立てやプランクで手首や肩が気になるクライアントを担当しているトレーナー",
@@ -206,7 +206,9 @@
         "extra": "10:00〜15:00（昼休憩1時間）、学習4時間のうち実技が約8割です。評価シート・手順書・自主練習シートを配布予定です。"
       },
       "mood": [
-        "images/practice-arm.jpg"
+        "images/hands-1.jpg",
+        "images/hands-2.jpg",
+        "images/hands-3.jpg"
       ],
       "status": "before",
       "apply_url": "",
@@ -233,8 +235,8 @@
       "summary": "零式の中心となる講座です。耳・顎・顔・頭皮・首の後ろまでを、決まった順番で整えるヘッドコンディショニングを、評価から再評価まで2日間で練習します。",
       "target": "トレーナー・セラピストなど、身体に関わる専門職の方",
       "condition": "なし",
-      "image": "images/hero-assessment.jpg",
-      "image_alt": "受講者の肩まわりを評価する原口慶篤",
+      "image": "images/kiwami-main.jpg",
+      "image_alt": "頭部と顔に手を当てる施術の様子",
       "for_whom": [
         "零式の中心となる技術を、まず一つ深く身につけたい方",
         "ヘッドをメニューに取り入れたいセラピスト・トレーナー・美容に関わる方",
@@ -362,7 +364,9 @@
         "extra": "両日10:00〜17:00（昼休憩1時間）。学習時間の約8割が実技です。手順書・評価シートを配布予定です。"
       },
       "mood": [
-        "images/hero-assessment.jpg"
+        "images/kiwami-1.jpg",
+        "images/kiwami-2.jpg",
+        "images/kiwami-3.jpg"
       ],
       "status": "before",
       "apply_url": "",
@@ -389,8 +393,8 @@
       "summary": "足を、身体を支える土台と床からの情報を受け取る入り口の両面から捉えます。足部を整えたあと、硬い足と柔らかい足を切り替える運動を選び、歩行で比べるまでを1日で練習する入門講座です。実技が8割です。",
       "target": "トレーナー・セラピストなど、身体に関わる専門職の方",
       "condition": "なし",
-      "image": "images/practice-leg.jpg",
-      "image_alt": "ベッド上の受講者の足に触れて実演する原口慶篤と、見学する受講者たち",
+      "image": "images/foot-main.jpg",
+      "image_alt": "足裏を持って調整する様子",
       "for_whom": [
         "足部の評価や介入を、自分の施術や指導に取り入れたい方",
         "足を整えたあと、運動や歩行までつなげる指導を組み立てたい方",
@@ -527,7 +531,9 @@
         "extra": "8時間（休憩1時間）のうち、学習7時間の約8割が実技です。評価シート・足型と運動の選択表・自主練習シートを配布予定です。"
       },
       "mood": [
-        "images/practice-leg.jpg"
+        "images/foot-1.jpg",
+        "images/foot-2.jpg",
+        "images/foot-3.jpg"
       ],
       "status": "before",
       "apply_url": "",
@@ -554,8 +560,8 @@
       "summary": "姿勢を「感覚を統合した結果（出力）」として捉え、7ステップの評価から、体の土台・感覚を整え、日常の動きに移す運動までを2日間で練習します。",
       "target": "トレーナー・セラピストなど、身体に関わる専門職の方",
       "condition": "なし",
-      "image": "images/lecture-skeleton.jpg",
-      "image_alt": "骨格模型を使って骨盤と背骨を説明する原口慶篤",
+      "image": "images/posture-main.jpg",
+      "image_alt": "受講者の脚の状態を確認する原口慶篤",
       "for_whom": [
         "姿勢を整えても戻ってしまう、と感じている方",
         "「胸を張る」以外の姿勢指導を身につけたい方",
@@ -679,7 +685,9 @@
         "extra": "2日間の学習時間のうち約8割が実技です。評価シート・運動の段階表を配布予定です。"
       },
       "mood": [
-        "images/lecture-skeleton.jpg"
+        "images/posture-1.jpg",
+        "images/posture-2.jpg",
+        "images/posture-3.jpg"
       ],
       "status": "before",
       "apply_url": "",
@@ -706,8 +714,8 @@
       "summary": "関節の動きを理解したうえで行う、2〜3秒の短いストレッチと、経絡の流れに沿った全身ストレッチを2日間で学びます。評価から選び、運動につなげるまでを練習します。",
       "target": "トレーナー・セラピストなど、身体に関わる専門職の方",
       "condition": "2日間とも参加できる方",
-      "image": "images/practice-leg.jpg",
-      "image_alt": "受講者の脚に手を当てて実演する原口慶篤",
+      "image": "images/keiraku-main.jpg",
+      "image_alt": "うつ伏せの受講者の腰に手を当てる様子",
       "for_whom": [
         "筋肉単体ではなく、身体のつながりで施術を組み立てたい方",
         "ストレッチの引き出しを増やしたいトレーナー・セラピストの方"
@@ -775,7 +783,9 @@
         ]
       },
       "mood": [
-        "images/practice-leg.jpg"
+        "images/keiraku-1.jpg",
+        "images/keiraku-2.jpg",
+        "images/keiraku-3.jpg"
       ],
       "status": "before",
       "apply_url": "",
@@ -802,8 +812,8 @@
       "summary": "ボディメイクを求めるお客様に、施術という手段で応えるための考え方と技術を学びます。",
       "target": "トレーナー・セラピストなど、身体に関わる専門職の方",
       "condition": "なし",
-      "image": "images/practice-leg.jpg",
-      "image_alt": "受講者の下肢に触れて実演する原口慶篤",
+      "image": "images/bikyaku-assessment.jpg",
+      "image_alt": "受講者の足元を評価する原口慶篤",
       "for_whom": [
         "脚やお尻のラインに悩むお客様を担当している方",
         "トレーニングに施術を組み合わせたボディメイクを提案したい方"
@@ -931,7 +941,9 @@
         ]
       },
       "mood": [
-        "images/practice-leg.jpg"
+        "images/bikyaku-1.jpg",
+        "images/bikyaku-2.jpg",
+        "images/bikyaku-3.jpg"
       ],
       "status": "before",
       "apply_url": "",
@@ -958,8 +970,8 @@
       "summary": "2027年で唯一の東京以外での開催です。海の日の3連休に、高知で行う合宿形式の講座です。",
       "target": "トレーナー・セラピストなど、身体に関わる専門職の方",
       "condition": "3日間とも参加できる方",
-      "image": "images/practice-arm.jpg",
-      "image_alt": "受講者に手技を指導する原口慶篤",
+      "image": "images/gasshuku-main.jpg",
+      "image_alt": "寝た姿勢の受講者に運動を指導する様子",
       "for_whom": [
         "日常から離れ、まとまった時間で集中して学びたい方",
         "ボディメイクとコンディショニングを組み合わせて学びたい方"
@@ -1039,7 +1051,9 @@
         ]
       },
       "mood": [
-        "images/practice-arm.jpg"
+        "images/gasshuku-1.jpg",
+        "images/gasshuku-2.jpg",
+        "images/gasshuku-3.jpg"
       ],
       "status": "before",
       "apply_url": "",
@@ -1066,8 +1080,8 @@
       "summary": "腹診・舌診・脈診による東洋医学の見立てと、臓器の解剖・生理・神経支配を学び、腹部の状態・呼吸・姿勢・運動機能をつなげて評価する講座です。相手の反応を確認しながら介入を選び、再評価と生活・運動への提案まで組み立てます。",
       "target": "トレーナー・セラピストなど、身体に関わる専門職の方",
       "condition": "なし",
-      "image": "images/lecture-skeleton.jpg",
-      "image_alt": "骨格模型を使って説明する原口慶篤",
+      "image": "images/naizou-main.jpg",
+      "image_alt": "腹部に両手を当てる様子（過去の経絡アプローチ合宿）",
       "for_whom": [
         "腹部の緊張や張り、呼吸の浅さを訴えるお客様に、根拠を持って向き合いたい方",
         "東洋医学の腹診・舌診・脈診を、評価の一部として体系的に学びたい方",
@@ -1313,7 +1327,9 @@
         "extra": "DAY 1は解剖・生理・神経支配と実証・虚証、DAY 2は腹診・舌診・脈診、神経アプローチ、ケース実践を扱う予定です。時間配分は確定後にご案内します。"
       },
       "mood": [
-        "images/lecture-skeleton.jpg"
+        "images/naizou-1.jpg",
+        "images/naizou-2.jpg",
+        "images/naizou-3.jpg"
       ],
       "status": "before",
       "apply_url": "",

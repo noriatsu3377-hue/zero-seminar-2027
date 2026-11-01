@@ -318,6 +318,9 @@ def build_detail(s):
   </div>
 </div>
 '''
+    if len(s.get('mood') or []) > 1:
+        imgs = ''.join(f'<img src="{base}{m}" alt="過去のセミナーの様子" width="800" height="800" loading="lazy">' for m in s['mood'])
+        out += f'<div class="wrap"><p class="eyebrow">過去のセミナーの様子</p><div class="mood">{imgs}</div></div>\n'
     toc = [] if pending else [('for-you', '対象者'), ('goals', '学習目標'), ('content', '講義・実技'), ('curriculum', 'カリキュラム'), ('diff', '他講座との違い')]
     toc += [('instructor', '講師'), ('outline', '開催概要')] + ([('faq', 'よくある質問')] if s.get('faq') else [])
     out += '<nav class="detail-nav wrap" aria-label="この講座のページ内目次">' + ''.join(f'<a href="#{i}">{t}</a>' for i, t in toc) + '</nav>\n'
