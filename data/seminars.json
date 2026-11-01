@@ -532,7 +532,7 @@
       "status": "before",
       "apply_url": "",
       "outline": {
-        "time": "8時間（休憩1時間を含む）。開始・終了時刻は受付開始時にご案内します。",
+        "time": "10:00〜18:00（昼休憩1時間を含む）",
         "venue": "",
         "price": "88,000円（税込）",
         "capacity": "15名",
@@ -684,7 +684,7 @@
       "status": "before",
       "apply_url": "",
       "outline": {
-        "time": "",
+        "time": "両日 10:00〜17:00（昼休憩1時間を含む）",
         "venue": "",
         "price": "165,000円（税込）",
         "capacity": "15名",
@@ -780,7 +780,7 @@
       "status": "before",
       "apply_url": "",
       "outline": {
-        "time": "",
+        "time": "両日 10:00〜17:00（昼休憩1時間を含む）",
         "venue": "",
         "price": "176,000円（税込）",
         "capacity": "15名",
@@ -1044,7 +1044,7 @@
       "status": "before",
       "apply_url": "",
       "outline": {
-        "time": "",
+        "time": "3日間とも 10:00〜17:00（昼休憩1時間を含む）",
         "venue": "",
         "price": "220,000円（税込）。宿泊・食事・交通費は含みません。",
         "capacity": "15名",
@@ -1318,7 +1318,7 @@
       "status": "before",
       "apply_url": "",
       "outline": {
-        "time": "",
+        "time": "両日 10:00〜17:00（昼休憩1時間を含む）",
         "venue": "",
         "price": "198,000円（税込）",
         "capacity": "15名",
@@ -1416,7 +1416,7 @@
       "status": "before",
       "apply_url": "",
       "outline": {
-        "time": "",
+        "time": "両日 10:00〜17:00（昼休憩1時間を含む）",
         "venue": "",
         "price": "220,000円（税込）。ADVANCEとのセット 440,000円（税込）",
         "capacity": "15名",
@@ -1512,7 +1512,7 @@
       "status": "before",
       "apply_url": "",
       "outline": {
-        "time": "",
+        "time": "両日 10:00〜17:00（昼休憩1時間を含む）",
         "venue": "",
         "price": "264,000円（税込）。BASICとのセット 440,000円（税込）",
         "capacity": "15名",
@@ -1655,7 +1655,7 @@
       "status": "before",
       "apply_url": "",
       "outline": {
-        "time": "",
+        "time": "両日 10:00〜17:00（昼休憩1時間を含む）",
         "venue": "",
         "price": "220,000円（税込）",
         "capacity": "15名",
