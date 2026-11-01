@@ -184,7 +184,7 @@ def build_index():
     <h2>零式で学べること</h2>
     <p class="lead">零式の講座は、入門から統合までの段階に分かれています。<span class="mk">興味や目的に合わせて</span>講座を選べます。すべてを順番に受講する必要はありません。必要な修了歴や参加日数は、各講座の受講条件をご確認ください。</p>
     <div class="steps">
-      <div class="step fade"><div class="lv">STEP 1｜入門</div><h3>手・足をつくる</h3><p>零式-ハンドベースコンディショニング／零式-足を作るセミナー。受講条件なし。</p></div>
+      <div class="step fade"><div class="lv">STEP 1｜入門</div><h3>手・足をつくる</h3><p>零式-ハンドベースコンディショニング／零式-フットベースコンディショニング。受講条件なし。</p></div>
       <div class="step fade"><div class="lv">STEP 2｜基幹</div><h3>零式-ヘッドコンディショニング極</h3><p>零式の中心となる技術。受講条件なし。</p></div>
       <div class="step fade"><div class="lv">STEP 3｜応用・上位</div><h3>姿勢・経絡・関節・内臓</h3><p>美姿勢、経絡ストレッチ、関節調整法、内臓調整など。関節調整法ADVANCEはBASIC修了者が対象。</p></div>
       <div class="step fade"><div class="lv">STEP 4｜統合</div><h3>ZERO RECOVERY</h3><p>零式の技術を統合する最上位講座。零式-ヘッドコンディショニング極の修了者が対象。</p></div>
