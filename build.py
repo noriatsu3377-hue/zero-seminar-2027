@@ -103,7 +103,7 @@ def card(s, base):
     topics = '|'.join(s.get('topics') or [])
     tags = ''.join(f'<span class="tag-topic">{E(t)}</span>' for t in s.get('topics') or [])
     return f'''<article class="card fade" data-month="{s['month']}" data-topics="{E(topics)}">
-  <img src="{base}{s['image']}" alt="{E(s['image_alt'])}（過去のセミナーの様子）" loading="lazy" width="800" height="500">
+  <img src="{base}{s['image']}" alt="{E(s['image_alt'])}" loading="lazy" width="800" height="500">
   <div class="card-body">
     <div class="lv">{s['month']}月｜{E(s['level'])}</div>
     <h3>{E(s['name'])}</h3>
@@ -252,7 +252,7 @@ def build_index():
   <div class="wrap">
     <p class="eyebrow">ENTRY</p>
     <h2>受付開始時期と、お申し込みの流れ</h2>
-    <p class="lead">2027年の講座は4つの期間に分けて受付を開始します（2026年11月・2027年1月・4月・7月）。受付開始のお知らせは公式LINEでお届けします。</p>
+    <p class="lead">各講座の受付は、開催月の2ヶ月前に開始します（例：1月の講座は2026年11月、12月の講座は2027年10月）。受付開始のお知らせは公式LINEでお届けします。</p>
     <div class="release">{rel}</div>
     <ol class="flow">
       <li>公式LINEで受付開始の案内を受け取る</li>
@@ -301,7 +301,7 @@ def build_detail(s):
     out += f'''<main id="main">
 <div class="wrap crumb"><a href="{base}">トップ</a> ／ <a href="{base}#seminars">セミナー一覧</a> ／ {E(s['name'])}</div>
 <div class="wrap d-hero">
-  <figure class="d-photo"><img src="{base}{s['image']}" alt="{E(s['image_alt'])}" width="800" height="600"><figcaption>過去のセミナーの様子</figcaption></figure>
+  <figure class="d-photo"><img src="{base}{s['image']}" alt="{E(s['image_alt'])}" width="800" height="600"><figcaption>{E(s.get('photo_caption','過去のセミナーの様子'))}</figcaption></figure>
   <div class="d-head">
     <p class="eyebrow">{s['month']}月開催｜{E(s['level'])}</p>
     <h1>{E(s['name'])}</h1>
@@ -319,8 +319,9 @@ def build_detail(s):
 </div>
 '''
     if len(s.get('mood') or []) > 1:
-        imgs = ''.join(f'<img src="{base}{m}" alt="過去のセミナーの様子" width="800" height="800" loading="lazy">' for m in s['mood'])
-        out += f'<div class="wrap"><p class="eyebrow">過去のセミナーの様子</p><div class="mood">{imgs}</div></div>\n'
+        mcap = E(s.get('mood_caption', '過去のセミナーの様子'))
+        imgs = ''.join(f'<img src="{base}{m}" alt="{mcap}" width="800" height="800" loading="lazy">' for m in s['mood'])
+        out += f'<div class="wrap"><p class="eyebrow">{mcap}</p><div class="mood">{imgs}</div></div>\n'
     toc = [] if pending else [('for-you', '対象者'), ('goals', '学習目標'), ('content', '講義・実技'), ('curriculum', 'カリキュラム'), ('diff', '他講座との違い')]
     toc += [('instructor', '講師'), ('outline', '開催概要')] + ([('faq', 'よくある質問')] if s.get('faq') else [])
     out += '<nav class="detail-nav wrap" aria-label="この講座のページ内目次">' + ''.join(f'<a href="#{i}">{t}</a>' for i, t in toc) + '</nav>\n'
