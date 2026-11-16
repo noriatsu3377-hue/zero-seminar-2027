@@ -53,6 +53,23 @@ def cta(s, base, cls='btn solid'):
     return line_button(base, label, cls)
 
 
+def members_box(base, full=True):
+    """ZERO MEMBERS 有料会員特典（2027年）。料金表や会員価格の金額は載せない。"""
+    if not full:
+        return (f'<p class="members-note"><strong>ZERO MEMBERS 有料会員特典：</strong>有料会員は、2027年の対象セミナーを通常受講料の15％OFFで受講いただけます。'
+                f'一般のお申し込みは通常価格です。<a href="{base}#members">会員特典について</a></p>')
+    return f'''<div id="members" class="members fade">
+  <p class="eyebrow">MEMBERS</p>
+  <h3>ZERO MEMBERS 有料会員特典</h3>
+  <div class="members-compare" role="list">
+    <div class="mc" role="listitem"><span class="mc-who">一般の方</span><span class="mc-what">通常受講料</span></div>
+    <div class="mc mc-member" role="listitem"><span class="mc-who">ZERO MEMBERS 有料会員</span><span class="mc-what">通常受講料の15％OFF</span></div>
+  </div>
+  <p>ZERO MEMBERSの有料会員は、2027年の対象セミナーを通常受講料の15％OFFで受講いただけます。継続して学ぶ皆さまの、現場での実践と技術の習得を応援します。</p>
+  <p class="members-sub">一般のお申し込みは通常価格でのご案内となります。早期申込割引はありません。各講座の受講料・定員・会員割引の適用条件は、受付開始時にご案内します。<br>※無料の公式LINE登録や無料コミュニティへの参加は、有料会員割引の対象ではありません。</p>
+</div>'''
+
+
 def ov(s, key):
     v = (s.get('outline') or {}).get(key, '')
     return E(v) if v else PENDING_TXT
@@ -231,6 +248,7 @@ def build_index():
     <div class="common-info">
       <p><strong>対象：</strong>トレーナー・セラピストなど、身体に関わる専門職の方（受講条件のある講座は各カードに記載）</p>
       <p><strong>料金・時間・会場・定員：</strong>各講座の受付開始時にご案内します。講座の内容とカリキュラムは「セミナー詳細を見る」からご確認ください。</p>
+      <p><strong>ZERO MEMBERS 有料会員：</strong>2027年の対象セミナーを通常受講料の15％OFFで受講いただけます（一般の方は通常価格）。<a href="#members">会員特典について</a></p>
     </div>
     <form class="filter" aria-label="セミナーの絞り込み" hidden>
       <div class="filter-row">
@@ -260,6 +278,7 @@ def build_index():
       <li>案内メールに沿ってお支払い</li>
       <li>入金確認後、正式申込完了</li>
     </ol>
+    {members_box(base)}
   </div>
 </section>
 
@@ -429,6 +448,7 @@ def build_detail(s):
     {rows}
     <tr><th scope="row">受付状況</th><td>{E(status(s))}</td></tr>
   </table>
+  {members_box(base, full=False)}
 </div></section>
 '''
     if s.get('faq'):

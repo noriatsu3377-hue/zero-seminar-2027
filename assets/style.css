@@ -307,3 +307,18 @@ p{margin:0 0 1em}
 .acc details>ul{margin-bottom:16px}
 .acc h4{font-family:var(--serif);font-weight:500;font-size:.98rem;color:var(--gold);margin-top:14px;margin-bottom:6px}
 .acc details>ul:last-child{margin-bottom:18px}
+
+/* ZERO MEMBERS 有料会員特典 */
+.members{scroll-margin-top:90px;margin-top:40px;padding:28px 24px;border:1px solid rgba(168,137,90,.45);border-radius:var(--radius);background:#fff}
+.members h3{margin:4px 0 16px;font-family:"Noto Serif JP",serif;font-weight:500;font-size:1.25rem}
+.members p{margin:0 0 10px;color:var(--ink)}
+.members .members-sub{font-size:.88rem;color:var(--ink-sub);margin:0}
+.members-compare{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 16px}
+.mc{display:flex;flex-direction:column;gap:2px;padding:12px 14px;border:1px solid rgba(36,33,29,.15);border-radius:var(--radius)}
+.mc-who{font-size:.82rem;color:var(--ink-sub)}
+.mc-what{font-size:1rem;color:var(--ink)}
+.mc-member{border-color:rgba(168,137,90,.7)}
+.mc-member .mc-what{color:#6d5634;font-weight:500}
+.members-note{margin:16px 0 0;font-size:.9rem;color:var(--ink-sub)}
+.members-note strong{color:#6d5634;font-weight:500}
+@media (max-width:560px){.members{padding:22px 16px}.members-compare{grid-template-columns:1fr}}
