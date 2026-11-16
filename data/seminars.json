@@ -268,7 +268,7 @@
         "images/hands-2.jpg",
         "images/hands-3.jpg"
       ],
-      "status": "before",
+      "status": "open",
       "apply_url": "https://docs.google.com/forms/d/e/1FAIpQLSf6kjyjsDLaYanBHFRyJfcgoMZms5SpXGWCwxUFN2NF4wsHrQ/viewform",
       "outline": {
         "time": "10:00〜15:00（昼休憩1時間を含む）",
@@ -276,7 +276,7 @@
         "price": "対面 33,000円／オンライン 22,000円（税込）",
         "capacity": "15名（対面・オンラインの内訳は受付開始時にご案内します）",
         "items": "筆記用具・ノート。実技があるため、動きやすい服装でお越しください。",
-        "deadline": "受付開始から1週間",
+        "deadline": "2026年11月24日（火）まで（受付開始から1週間）",
         "payment": "申込フォーム（Googleフォーム）の送信後、お支払い方法をご案内します。",
         "cancel": "開催日の31日前まで：受講料の全額を返金（振込手数料を除く）／30日前〜8日前：受講料の50%を返金／7日前〜当日：返金なし。主催者の都合で中止した場合は全額を返金します。詳しくは利用規約・キャンセルポリシーをご覧ください。"
       },
