@@ -78,7 +78,7 @@ def head(title, desc, base):
 <body class="has-sticky">
 <a class="skip" href="#main">本文へ移動</a>
 <header class="site-header"><div class="wrap">
-  <a class="brand" href="{base}">ZERO<small>零式 2027 年間セミナー</small></a>
+  <a class="brand" href="{base}">ZERO<small>ZERO式 2027 年間セミナー</small></a>
   <nav class="nav" aria-label="サイト内">
     <a href="{base}#schedule">年間スケジュール</a><a href="{base}#instructor">講師</a><a href="{base}#seminars">セミナー一覧</a><a href="{base}#entry">受付・申込</a>
   </nav>
@@ -142,16 +142,16 @@ def build_index():
     certs = ''.join(f'<li>{E(c)}</li>' for c in INS['certs_private'])
     trains = ''.join(f'<li>{E(c)}</li>' for c in INS['trainings'])
     acts = ''.join(f'<li>{E(c)}</li>' for c in INS['activities'])
-    out = head('零式 2027 年間セミナー｜東京から、零式を学ぶ一年。',
-               'トレーナー・セラピストのための零式セミナー。2027年は東京を中心に、手・足の入門講座から零式-ヘッドコンディショニング極、関節調整法、ZERO RECOVERYまで、毎月1講座を開催します。', base)
+    out = head('ZERO式 2027 年間セミナー｜東京から、ZERO式を学ぶ一年。',
+               'トレーナー・セラピストのためのZERO式セミナー。2027年は東京を中心に、手・足の入門講座からZERO式-ヘッドコンディショニング極、関節調整法、ZERO RECOVERYまで、毎月1講座を開催します。', base)
     out += f'''<main id="main">
 <section class="hero">
   <div class="hero-photo" style="background-image:url('images/hero-assessment.jpg')" role="img" aria-label="受講者の肩まわりを評価する講師・原口慶篤"></div>
   <div class="hero-grad" aria-hidden="true"></div>
   <div class="wrap">
     <p class="hero-year">ZERO SEMINAR 2027</p>
-    <h1>東京から、<br>零式を学ぶ一年。</h1>
-    <p class="hero-sub">トレーナー・セラピストなど、身体に関わる専門職の方へ。<br>「触れる手」をつくる入門講座から、零式の技術を統合する上位講座まで。2027年は東京を中心に、毎月1講座を開催します。</p>
+    <h1>東京から、<br>ZERO式を学ぶ一年。</h1>
+    <p class="hero-sub">トレーナー・セラピストなど、身体に関わる専門職の方へ。<br>「触れる手」をつくる入門講座から、ZERO式の技術を統合する上位講座まで。2027年は東京を中心に、毎月1講座を開催します。</p>
     <ul class="hero-facts">
       <li>全12講座・各講座は年1回の開催</li>
       <li>東京開催（7月のみ高知で合宿）</li>
@@ -181,15 +181,15 @@ def build_index():
 <section>
   <div class="wrap">
     <p class="eyebrow">LEARNING PATH</p>
-    <h2>零式で学べること</h2>
-    <p class="lead">零式の講座は、入門から統合までの段階に分かれています。<span class="mk">興味や目的に合わせて</span>講座を選べます。すべてを順番に受講する必要はありません。必要な修了歴や参加日数は、各講座の受講条件をご確認ください。</p>
+    <h2>ZERO式で学べること</h2>
+    <p class="lead">ZERO式の講座は、入門から統合までの段階に分かれています。<span class="mk">興味や目的に合わせて</span>講座を選べます。すべてを順番に受講する必要はありません。必要な修了歴や参加日数は、各講座の受講条件をご確認ください。</p>
     <div class="steps">
-      <div class="step fade"><div class="lv">STEP 1｜入門</div><h3>手・足をつくる</h3><p>零式-ハンドベースコンディショニング／零式-フットベースコンディショニング。受講条件なし。</p></div>
-      <div class="step fade"><div class="lv">STEP 2｜基幹</div><h3>零式-ヘッドコンディショニング極</h3><p>零式の中心となる技術。受講条件なし。</p></div>
+      <div class="step fade"><div class="lv">STEP 1｜入門</div><h3>手・足をつくる</h3><p>ZERO式-ハンドベースコンディショニング／ZERO式-フットベースコンディショニング。受講条件なし。</p></div>
+      <div class="step fade"><div class="lv">STEP 2｜基幹</div><h3>ZERO式-ヘッドコンディショニング極</h3><p>ZERO式の中心となる技術。受講条件なし。</p></div>
       <div class="step fade"><div class="lv">STEP 3｜応用・上位</div><h3>姿勢・経絡・関節・内臓</h3><p>美姿勢、経絡ストレッチ、関節調整法、内臓調整など。関節調整法ADVANCEはBASIC修了者が対象。</p></div>
-      <div class="step fade"><div class="lv">STEP 4｜統合</div><h3>ZERO RECOVERY</h3><p>零式の技術を統合する最上位講座。零式-ヘッドコンディショニング極の修了者が対象。</p></div>
+      <div class="step fade"><div class="lv">STEP 4｜統合</div><h3>ZERO RECOVERY</h3><p>ZERO式の技術を統合する最上位講座。ZERO式-ヘッドコンディショニング極の修了者が対象。</p></div>
     </div>
-    <p class="cond">事前の修了歴が必要な講座：零式-関節調整法 ADVANCE（BASIC修了者）／零式-ZERO RECOVERY 第2期（零式-ヘッドコンディショニング極の修了者）</p>
+    <p class="cond">事前の修了歴が必要な講座：ZERO式-関節調整法 ADVANCE（BASIC修了者）／ZERO式-ZERO RECOVERY 第2期（ZERO式-ヘッドコンディショニング極の修了者）</p>
   </div>
 </section>
 
@@ -214,8 +214,8 @@ def build_index():
       <p class="eyebrow">PROFILE</p>
       <h2>{E(INS['name'])}</h2>
       <p class="role" style="color:var(--ink-sub)">{E(' ／ '.join(INS['titles']))}<br>{E(INS['job'])}</p>
-      <p>パーソナルトレーナー・整体師として12年、現場でお客様の身体に向き合ってきました。人体解剖実習には5回参加し、オステオパシーではスラスト（BASIC・ADVANCE）と内臓調整を学んでいます。教科書の知識を、実際の身体で確かめてきた経験が、零式の講座の土台です。</p>
-      <p>零式で大切にしているのは、<span class="mk">目の前の一人をよく見て、必要なことを、必要な分だけ</span>行うこと。技術を選ぶ理由にも、手を止める判断にも責任を持つ姿勢を、技術と一緒に伝えています。</p>
+      <p>パーソナルトレーナー・整体師として12年、現場でお客様の身体に向き合ってきました。人体解剖実習には5回参加し、オステオパシーではスラスト（BASIC・ADVANCE）と内臓調整を学んでいます。教科書の知識を、実際の身体で確かめてきた経験が、ZERO式の講座の土台です。</p>
+      <p>ZERO式で大切にしているのは、<span class="mk">目の前の一人をよく見て、必要なことを、必要な分だけ</span>行うこと。技術を選ぶ理由にも、手を止める判断にも責任を持つ姿勢を、技術と一緒に伝えています。</p>
       <div class="pf-block"><h3>主な活動・指導実績</h3><ul>{acts}</ul></div>
       <div class="pf-block"><h3>民間資格</h3><ul>{certs}</ul></div>
       <div class="pf-block"><h3>研修・講習の受講歴</h3><ul>{trains}</ul></div>
@@ -289,7 +289,7 @@ def build_detail(s):
     base = '../../'
     pending = s.get('pending')
     li = lambda xs: ''.join(f'<li>{E(x)}</li>' for x in xs)
-    title = f'{s["name"]}｜零式 2027 年間セミナー'
+    title = f'{s["name"]}｜ZERO式 2027 年間セミナー'
     desc = f'{s["name"]}（{s["date"]}・{s["place"]}）。{s["summary"]}'
     out = head(title, desc, base)
     cta_main = cta(s, base)
@@ -400,7 +400,7 @@ def build_detail(s):
 
 <section id="diff" class="d-sec"><div class="wrap narrow fade">
   <p class="eyebrow">DIFFERENCE</p>
-  <h2>ほかの零式講座との違い</h2>
+  <h2>ほかのZERO式講座との違い</h2>
   <p>{E(s['diff'])}</p>
   {history}
 </div></section>
@@ -462,7 +462,7 @@ def build_detail(s):
 
 
 TERMS = [
-    ('第1条（適用）', ['本規約は、零 -ZERO-（以下「主催者」）が開催する零式 2027 年間セミナー（以下「講座」）の受講に関する条件を定めるものです。', '講座に申し込んだ方（以下「受講者」）は、本規約に同意したものとみなします。']),
+    ('第1条（適用）', ['本規約は、零 -ZERO-（以下「主催者」）が開催するZERO式 2027 年間セミナー（以下「講座」）の受講に関する条件を定めるものです。', '講座に申し込んだ方（以下「受講者」）は、本規約に同意したものとみなします。']),
     ('第2条（申込と成立）', ['申込は、各講座ページに掲載する申込フォーム（Googleフォーム）から行います。', '受講契約は、主催者が受講料の入金を確認した時点で成立します。', '定員に達した場合は、受付を締め切ることがあります。']),
     ('第3条（受講料）', ['受講料は各講座ページに記載の金額（税込）です。', '合宿の宿泊・食事・交通費は受講料に含みません。']),
     ('第4条（キャンセルと返金）', ['受講者の都合によるキャンセルは、次のとおり返金します。', '開催日の31日前まで：受講料の全額（振込手数料を除く）', '開催日の30日前〜8日前：受講料の50%', '開催日の7日前〜当日、および連絡のない欠席：返金なし', 'キャンセルの連絡は、公式LINEまたは申込時にご案内する連絡先にお願いします。連絡を受けた日を基準に計算します。', '返金は、キャンセルの連絡を受けてから30日以内に振込で行います。']),
@@ -477,7 +477,7 @@ TERMS = [
 
 def build_terms():
     base = '../'
-    out = head('利用規約・キャンセルポリシー｜零式 2027 年間セミナー', '零式 2027 年間セミナーの利用規約とキャンセルポリシーです。', base)
+    out = head('利用規約・キャンセルポリシー｜ZERO式 2027 年間セミナー', 'ZERO式 2027 年間セミナーの利用規約とキャンセルポリシーです。', base)
     body = ''.join(f'<h2>{E(t)}</h2><ul class="dots">' + ''.join(f'<li>{E(x)}</li>' for x in xs) + '</ul>' for t, xs in TERMS)
     out += f'<main id="main"><section class="sec-ivory"><div class="wrap narrow"><h1>利用規約・キャンセルポリシー</h1>{body}<p>2026年11月 制定</p></div></section></main>\n'
     out += foot(base, line_button(base, 'LINEで問い合わせる'))
