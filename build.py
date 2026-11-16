@@ -214,7 +214,7 @@ def build_index():
   <div class="wrap">
     <p class="eyebrow">2027 SCHEDULE</p>
     <h2>年間スケジュール</h2>
-    <p class="lead">各講座は年1回、1ヶ月に1講座の開催です。会場は<span class="mk">東京</span>、7月の合宿のみ高知で開催します。会場の詳細は受付開始時にご案内します。</p>
+    <p class="lead">各講座は年1回、1ヶ月に1講座の開催です。会場は<span class="mk">東京</span>、7月の合宿のみ高知で開催します。会場の詳細は、お申し込みの締め切り後、ご入金を確認した方にご案内します。</p>
     <div class="sched">
 {rows}    </div>
     <p class="note">※日程は予定です。変更がある場合は公式LINEでお知らせします。</p>
@@ -247,7 +247,7 @@ def build_index():
     <h2>セミナー一覧</h2>
     <div class="common-info">
       <p><strong>対象：</strong>トレーナー・セラピストなど、身体に関わる専門職の方（受講条件のある講座は各カードに記載）</p>
-      <p><strong>料金・時間・会場・定員：</strong>各講座の受付開始時にご案内します。講座の内容とカリキュラムは「セミナー詳細を見る」からご確認ください。</p>
+      <p><strong>料金・時間・定員：</strong>各講座の受付開始時にご案内します。会場の詳細は、お申し込みの締め切り後、ご入金を確認した方にご案内します。講座の内容とカリキュラムは「セミナー詳細を見る」からご確認ください。</p>
       <p><strong>ZERO MEMBERS 有料会員：</strong>2027年の対象セミナーを通常受講料の15％OFFで受講いただけます（一般の方は通常価格）。<a href="#members">会員特典について</a></p>
     </div>
     <form class="filter" aria-label="セミナーの絞り込み" hidden>
