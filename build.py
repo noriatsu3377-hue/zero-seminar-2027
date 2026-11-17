@@ -137,6 +137,35 @@ def card(s, base):
 </article>'''
 
 
+def now_open(base):
+    items = ''
+    for s in SEMS:
+        if not can_apply(s):
+            continue
+        dl = (s.get('outline') or {}).get('deadline', '')
+        dl_html = f'<p class="no-dl">申込期限：{E(dl)}</p>' if dl else ''
+        items += f'''<div class="no-item">
+    <p class="no-badge">受付中</p>
+    <h3>{s['month']}月｜{E(s['name'])}</h3>
+    <p class="no-date">{E(s['date'])}｜{E(s['place'])}｜{E(s['format'])}</p>
+    {dl_html}
+    <div class="btns">
+      {cta(s, base)}
+      <a class="btn" href="{base}seminars/{s['slug']}/">講座の詳細を見る</a>
+    </div>
+  </div>'''
+    if not items:
+        items = f'<div class="no-item"><p class="no-date">現在、受付中の講座はありません。受付開始は公式LINEでお知らせします。</p><div class="btns">{line_button(base)}</div></div>'
+    return f'''<section class="now-open" id="now-open" aria-labelledby="now-open-h">
+  <div class="wrap">
+    <p class="eyebrow">NOW OPEN</p>
+    <h2 id="now-open-h">受付中の講座</h2>
+    {items}
+  </div>
+</section>
+'''
+
+
 def build_index():
     base = ''
     rows = ''
@@ -182,6 +211,7 @@ def build_index():
   <button class="motion-toggle" type="button" aria-pressed="false">背景の動きを停止</button>
 </section>
 
+{now_open(base)}
 <section class="sec-ivory">
   <div class="wrap intro fade">
     <img src="images/lecture-talk.jpg" alt="{E(INS['photo_alt'])}" width="440" height="587" loading="lazy">
